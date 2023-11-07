@@ -2,11 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 const TrackListScreen = () => {
-  return (
-    <View>
-      <Text style={{ fontsize: 48 }}>TrackListScreen</Text>
-    </View>
-  );
+  return <Text style={{ fontSize: 48 }}>TrackListScreen</Text>;
 };
 
 const styles = StyleSheet.create({});

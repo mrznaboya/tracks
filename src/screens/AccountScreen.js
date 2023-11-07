@@ -2,11 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 const AccountScreen = () => {
-  return (
-    <View>
-      <Text style={{ fontsize: 48 }}>AccountScreen</Text>
-    </View>
-  );
+  return <Text style={{ fontSize: 48 }}>AccountScreen</Text>;
 };
 
 const styles = StyleSheet.create({});
