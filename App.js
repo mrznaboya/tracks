@@ -9,6 +9,7 @@ import SignupScreen from "./src/screens/SignupScreen";
 import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
+import { Provider as AuthProvider } from "./src/context/AuthContext";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,12 +38,14 @@ const MainTabNavigator = () => (
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="loginFlow" component={LoginStack} />
-        <Stack.Screen name="mainFlow" component={MainTabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="loginFlow" component={LoginStack} />
+          <Stack.Screen name="mainFlow" component={MainTabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 
