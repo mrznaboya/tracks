@@ -38,6 +38,8 @@ const signup =
         type: "signup",
         payload: response.data.token,
       });
+
+      // Navigate to main flow
     } catch (err) {
       dispatch({
         type: "add_error",
@@ -60,7 +62,7 @@ const signout = (dispatch) => {
   };
 };
 
-export const { Context, Provider } = createDataContext(
+export const { Provider, Context } = createDataContext(
   authReducer,
   { signin, signout, signup },
   { token: null, errorMessage: "" }
