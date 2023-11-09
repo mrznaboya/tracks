@@ -10,6 +10,7 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { setNavigator } from "./src/navigationRef";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,7 +40,11 @@ const MainTabNavigator = () => (
 const App = () => {
   return (
     <AuthProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        ref={(navigator) => {
+          setNavigator(navigator);
+        }}
+      >
         <Stack.Navigator>
           <Stack.Screen name="loginFlow" component={LoginStack} />
           <Stack.Screen name="mainFlow" component={MainTabNavigator} />
