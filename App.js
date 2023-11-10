@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -10,13 +10,12 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
-import { setNavigator } from "./src/navigationRef";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const LoginStack = () => (
-  <Stack.Navigator>
+const LoginFlow = () => (
+  <Stack.Navigator initialRouteName="Signup">
     <Stack.Screen name="Signup" component={SignupScreen} />
     <Stack.Screen name="Signin" component={SigninScreen} />
   </Stack.Navigator>
@@ -29,7 +28,7 @@ const TrackListStack = () => (
   </Stack.Navigator>
 );
 
-const MainTabNavigator = () => (
+const MainFlow = () => (
   <Tab.Navigator>
     <Tab.Screen name="trackListFlow" component={TrackListStack} />
     <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
@@ -40,14 +39,10 @@ const MainTabNavigator = () => (
 const App = () => {
   return (
     <AuthProvider>
-      <NavigationContainer
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      >
+      <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="loginFlow" component={LoginStack} />
-          <Stack.Screen name="mainFlow" component={MainTabNavigator} />
+          <Stack.Screen name="loginFlow" component={LoginFlow} />
+          <Stack.Screen name="mainFlow" component={MainFlow} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

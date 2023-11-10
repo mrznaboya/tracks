@@ -1,7 +1,6 @@
 import createDataContext from "./createDataContext";
 import trackerApi from "../api/tracker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { navigate } from "../navigationRef";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -25,13 +24,17 @@ const authReducer = (state, action) => {
 const signup =
   (dispatch) =>
   async ({ email, password }) => {
+    const navigation = useNavigation();
     // Make api request to sign up with that email and password
     // If we sign up, modify our state, and say that we are
     // authenticated
-    // If signing up fails, we probably need to reflct an error message
+    // If signing up fails, we probably need to reflect an error message
     // somewhere
     try {
-      const response = await trackerApi.post("/signup", { email, password });
+      const response = await trackerApi.post("/signup", {
+        email,
+        password,
+      });
       await AsyncStorage.setItem("token", response.data.token);
       // await AsyncStorage.getItem('token');
 
@@ -40,9 +43,7 @@ const signup =
         payload: response.data.token,
       });
 
-      navigate("TrackList");
-
-      // Navigate to main flow
+      // Navigate to mainFlow/trackList <=================== Gi try nako gamit useNavigation diri , mo Invalid Hook Call mn
     } catch (err) {
       dispatch({
         type: "add_error",
