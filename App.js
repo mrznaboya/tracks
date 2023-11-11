@@ -16,8 +16,12 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const LoginFlow = () => (
-  <Stack.Navigator initialRouteName="Signup">
-    <Stack.Screen name="Signup" component={SignupScreen} />
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Signup"
+      component={SignupScreen}
+      options={{ headerShown: false }}
+    />
     <Stack.Screen name="Signin" component={SigninScreen} />
   </Stack.Navigator>
 );
@@ -46,7 +50,11 @@ const App = () => {
         }}
       >
         <Stack.Navigator>
-          <Stack.Screen name="loginFlow" component={LoginFlow} />
+          <Stack.Screen
+            name="loginFlow"
+            component={LoginFlow}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="mainFlow" component={MainFlow} />
         </Stack.Navigator>
       </NavigationContainer>
