@@ -1,13 +1,20 @@
 import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
 import { Context as AuthContext } from "../context/AuthContext";
 
-const SignupScreen = ({ navigation }) => {
-  const { state, signup } = useContext(AuthContext);
+const SignupScreen = () => {
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
+
+  // Use useFocusEffect to perform actions when the screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      clearErrorMessage();
+    }, [])
+  );
 
   return (
     <View style={styles.containerStyle}>

@@ -7,11 +7,17 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
       return { ...state, errorMessage: action.payload };
-    case "signup":
+    case "signin":
       return { errorMessage: "", token: action.payload };
+    case "clear_error_message":
+      return { ...state, errorMessage: "" };
     default:
       return state;
   }
+};
+
+const clearErrorMessage = (dispatch) => () => {
+  dispatch({ type: "clear_error_message" });
 };
 
 // Using compacted syntax
@@ -39,7 +45,7 @@ const signup =
       // await AsyncStorage.getItem('token');
 
       dispatch({
-        type: "signup",
+        type: "signin",
         payload: response.data.token,
       });
 
@@ -54,13 +60,25 @@ const signup =
     }
   };
 
-const signin = (dispatch) => {
-  return ({ email, password }) => {
+const signin =
+  (dispatch) =>
+  async ({ email, password }) => {
     // Try to signin
     // Handle success by updating state
     // Handle failure by showing error message(somehow)
+    try {
+      const response = await trackerApi.post("/signin", { email, password });
+      await AsyncStorage.setItem("Token", response.data.token);
+      dispatch({ type: "signin", payload: response.data.token });
+      navigate("mainFlow", { screen: "TrackList" });
+    } catch (err) {
+      dispatch({
+        type: "add_error",
+        payload: "Something went wrong with signin",
+      });
+      console.log(err);
+    }
   };
-};
 
 const signout = (dispatch) => {
   return () => {
@@ -70,6 +88,6 @@ const signout = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup },
+  { signin, signout, signup, clearErrorMessage },
   { token: null, errorMessage: "" }
 );
