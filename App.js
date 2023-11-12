@@ -13,6 +13,7 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./navigationRef";
+import { Provider as LocationProvider } from "./src/context/LocationContext";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,31 +66,33 @@ const MainFlow = () => (
 
 const App = () => {
   return (
-    <AuthProvider>
-      <NavigationContainer
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      >
-        <Stack.Navigator initialRouteName="ResolveAuth">
-          <Stack.Screen
-            name="ResolveAuth"
-            component={ResolveAuthScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="loginFlow"
-            component={LoginFlow}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="mainFlow"
-            component={MainFlow}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <NavigationContainer
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        >
+          <Stack.Navigator initialRouteName="ResolveAuth">
+            <Stack.Screen
+              name="ResolveAuth"
+              component={ResolveAuthScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="loginFlow"
+              component={LoginFlow}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="mainFlow"
+              component={MainFlow}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthProvider>
+    </LocationProvider>
   );
 };
 

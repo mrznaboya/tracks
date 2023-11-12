@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "@rneui/base";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import Spacer from "../components/Spacer";
 import { Context as AuthContext } from "../context/AuthContext";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const AccountScreen = () => {
   const { signout } = useContext(AuthContext);
