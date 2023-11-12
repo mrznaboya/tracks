@@ -50,7 +50,11 @@ const MainFlow = () => (
       component={TrackListStack}
       options={{ headerShown: false }}
     />
-    <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
+    <Tab.Screen
+      name="TrackCreate"
+      component={TrackCreateScreen}
+      options={{ headerShown: false }}
+    />
     <Tab.Screen
       name="Account"
       component={AccountScreen}
