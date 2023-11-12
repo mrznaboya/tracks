@@ -35,14 +35,23 @@ export default (shouldTrack, callback) => {
   };
 
   useEffect(() => {
+    const cleanup = async () => {
+      if (subscriber) {
+        await subscriber.remove();
+        setSubscriber(null);
+      }
+    };
+
     if (shouldTrack) {
       startWatching();
     } else {
       // stop watching
-      subscriber.remove();
-      setSubscriber(null);
+      cleanup();
+      //   subscriber.remove();
+      //   setSubscriber(null);
     }
-  }, [shouldTrack]);
+    return () => cleanup(); // Cleanup on unmount
+  }, [shouldTrack, callback]);
 
   return [err];
 };
