@@ -1,18 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import AuthForm from "../components/AuthForm";
-import NavLink from "../components/NavLink";
 import { Context as AuthContext } from "../context/AuthContext";
 
-const SignupScreen = () => {
-  const { state, signup, clearErrorMessage, tryLocalSignin } =
-    useContext(AuthContext);
+import AuthForm from "../components/AuthForm";
+import NavLink from "../components/NavLink";
 
-  useEffect(() => {
-    tryLocalSignin();
-  }, []);
+const SignupScreen = () => {
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
   // Use useFocusEffect to perform actions when the screen gains focus
   useFocusEffect(

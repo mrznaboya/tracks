@@ -11,6 +11,8 @@ const authReducer = (state, action) => {
       return { errorMessage: "", token: action.payload };
     case "clear_error_message":
       return { ...state, errorMessage: "" };
+    case "signout":
+      return { token: null, errorMessage: "" };
     default:
       return state;
   }
@@ -18,6 +20,7 @@ const authReducer = (state, action) => {
 
 const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
+  console.log(token);
   if (token) {
     dispatch({
       type: "signin",
@@ -43,7 +46,7 @@ const clearErrorMessage = (dispatch) => () => {
 // const add = (a, b) => a + b;
 const signup =
   (dispatch) =>
-  async ({ email, password, navigation }) => {
+  async ({ email, password }) => {
     // Make api request to sign up with that email and password
     // If we sign up, modify our state, and say that we are
     // authenticated
@@ -81,7 +84,7 @@ const signin =
     // Handle failure by showing error message(somehow)
     try {
       const response = await trackerApi.post("/signin", { email, password });
-      await AsyncStorage.setItem("Token", response.data.token);
+      await AsyncStorage.setItem("token", response.data.token);
       dispatch({ type: "signin", payload: response.data.token });
       navigate("mainFlow", { screen: "TrackList" });
     } catch (err) {
@@ -93,10 +96,13 @@ const signin =
     }
   };
 
-const signout = (dispatch) => {
-  return () => {
-    // Somehow sign out
-  };
+const signout = (dispatch) => async () => {
+  // Somehow sign out
+  await AsyncStorage.removeItem("token");
+  dispatch({
+    type: "signout",
+  });
+  navigate("loginFlow", { screen: "Signup" });
 };
 
 export const { Provider, Context } = createDataContext(

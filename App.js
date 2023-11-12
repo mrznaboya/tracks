@@ -9,6 +9,8 @@ import SignupScreen from "./src/screens/SignupScreen";
 import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./navigationRef";
 
@@ -32,16 +34,28 @@ const LoginFlow = () => (
 
 const TrackListStack = () => (
   <Stack.Navigator>
-    <Stack.Screen name="TrackList" component={TrackListScreen} />
+    <Stack.Screen
+      name="TrackList"
+      component={TrackListScreen}
+      options={{ headerShown: false }}
+    />
     <Stack.Screen name="TrackDetail" component={TrackDetailScreen} />
   </Stack.Navigator>
 );
 
 const MainFlow = () => (
   <Tab.Navigator>
-    <Tab.Screen name="trackListFlow" component={TrackListStack} />
+    <Tab.Screen
+      name="trackListFlow"
+      component={TrackListStack}
+      options={{ headerShown: false }}
+    />
     <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
-    <Tab.Screen name="Account" component={AccountScreen} />
+    <Tab.Screen
+      name="Account"
+      component={AccountScreen}
+      options={{ headerShown: false }}
+    />
   </Tab.Navigator>
 );
 
@@ -53,13 +67,22 @@ const App = () => {
           setNavigator(navigator);
         }}
       >
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="ResolveAuth">
+          <Stack.Screen
+            name="ResolveAuth"
+            component={ResolveAuthScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="loginFlow"
             component={LoginFlow}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="mainFlow" component={MainFlow} />
+          <Stack.Screen
+            name="mainFlow"
+            component={MainFlow}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
