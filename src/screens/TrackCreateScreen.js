@@ -1,50 +1,27 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "@rneui/base";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Location from "expo-location";
-import { watchPositionAsync } from "expo-location";
+import { useIsFocused } from "@react-navigation/native";
 
 import "../_mockLocation";
 import Map from "../components/Map";
 import { Context as LocationContext } from "../context/LocationContext";
+import useLocation from "../hooks/useLocation";
 
 const TrackCreateScreen = () => {
   const { addLocation } = useContext(LocationContext);
-  const [err, setErr] = useState(null);
+  const isFocused = useIsFocused();
 
-  // const startWatching = async () => {
-  //   try {
-  //     await Location.requestForegroundPermissionsAsync();
-  //   } catch (e) {
-  //     setErr(e);
-  //   }
-  // };
-  const startWatching = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErr("Please enable location services");
-      }
-      await watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.BestForNavigation,
-          timeInterval: 1000,
-          distanceInterval: 10,
-        },
-        (location) => {
-          addLocation(location);
-        }
-      );
-    } catch (error) {
-      console.error("Error while starting location tracking:", error);
-      setErr("Error while starting location tracking");
-    }
-  };
+  const [err] = useLocation(isFocused, addLocation);
 
   useEffect(() => {
-    startWatching();
-  }, []);
+    if (isFocused) {
+      // Perform any additional logic when the screen is focused
+    }
+  }, [isFocused]);
+
+  console.log(isFocused);
 
   return (
     <SafeAreaView forceInset={{ top: "always" }}>
