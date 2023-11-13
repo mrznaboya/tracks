@@ -1,20 +1,45 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext } from "react";
+import { Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "@rneui/base";
+import { ListItem } from "@rneui/base";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import Spacer from "../components/Spacer";
+import { Context as TrackContext } from "../context/TrackContext";
 
 const TrackListScreen = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
+  const { state, fetchTracks } = useContext(TrackContext);
+
+  // console.log(state);
+  // Use useFocusEffect instead of NavigationEvents for version 6
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchTracks();
+    }, [])
+  );
+
   return (
-    <SafeAreaView forceInset={{ top: "always" }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+      {/* <NavigationEvents onWillFocus={fetchTracks} /> */}
       <Text style={{ fontSize: 48 }}>TrackListScreen</Text>
       <Spacer>
-        <Button
-          title="Go to Track Detail"
-          onPress={() => navigation.navigate("TrackDetail")}
+        <FlatList
+          data={state}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate("TrackDetailsScreen", { trackId: item._id })
+              // }
+              >
+                <ListItem chevron>
+                  <Text>{item.name}</Text>
+                </ListItem>
+              </TouchableOpacity>
+            );
+          }}
         />
       </Spacer>
     </SafeAreaView>
