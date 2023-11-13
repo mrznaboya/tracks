@@ -14,6 +14,7 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./navigationRef";
 import { Provider as LocationProvider } from "./src/context/LocationContext";
+import { Provider as TrackProvider } from "./src/context/TrackContext";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,33 +67,35 @@ const MainFlow = () => (
 
 const App = () => {
   return (
-    <LocationProvider>
-      <AuthProvider>
-        <NavigationContainer
-          ref={(navigator) => {
-            setNavigator(navigator);
-          }}
-        >
-          <Stack.Navigator initialRouteName="ResolveAuth">
-            <Stack.Screen
-              name="ResolveAuth"
-              component={ResolveAuthScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="loginFlow"
-              component={LoginFlow}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="mainFlow"
-              component={MainFlow}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </AuthProvider>
-    </LocationProvider>
+    <TrackProvider>
+      <LocationProvider>
+        <AuthProvider>
+          <NavigationContainer
+            ref={(navigator) => {
+              setNavigator(navigator);
+            }}
+          >
+            <Stack.Navigator initialRouteName="ResolveAuth">
+              <Stack.Screen
+                name="ResolveAuth"
+                component={ResolveAuthScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="loginFlow"
+                component={LoginFlow}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="mainFlow"
+                component={MainFlow}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </AuthProvider>
+      </LocationProvider>
+    </TrackProvider>
   );
 };
 

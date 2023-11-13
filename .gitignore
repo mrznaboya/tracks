@@ -36,6 +36,7 @@ yarn-error.*
 
 #ignoring files
 src/api/tracker.js
+src/hooks/useLocation-backup.js
 App-backup.js
 App-scratch.js
 navigationRef-scratch.js
