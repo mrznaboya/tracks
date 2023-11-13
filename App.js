@@ -41,7 +41,11 @@ const TrackListStack = () => (
       component={TrackListScreen}
       options={{ headerShown: false }}
     />
-    <Stack.Screen name="TrackDetail" component={TrackDetailScreen} />
+    <Stack.Screen
+      name="TrackDetail"
+      component={TrackDetailScreen}
+      options={{ headerBackTitleVisible: true, headerShown: true }}
+    />
   </Stack.Navigator>
 );
 

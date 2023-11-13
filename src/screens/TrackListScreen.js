@@ -8,7 +8,7 @@ import Spacer from "../components/Spacer";
 import { Context as TrackContext } from "../context/TrackContext";
 
 const TrackListScreen = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const { state, fetchTracks } = useContext(TrackContext);
 
   // console.log(state);
@@ -30,9 +30,9 @@ const TrackListScreen = () => {
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-              // onPress={() =>
-              //   navigation.navigate("TrackDetailsScreen", { trackId: item._id })
-              // }
+                onPress={() =>
+                  navigation.navigate("TrackDetail", { _id: item._id })
+                }
               >
                 <ListItem chevron>
                   <Text>{item.name}</Text>
