@@ -10,6 +10,7 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./src/navigationRef";
@@ -39,12 +40,19 @@ const TrackListStack = () => (
     <Stack.Screen
       name="TrackList"
       component={TrackListScreen}
-      options={{ headerShown: false }}
+      options={{
+        headerTitle: "Tracks",
+        headerLeft: () => null,
+      }}
     />
     <Stack.Screen
       name="TrackDetail"
       component={TrackDetailScreen}
-      options={{ headerBackTitleVisible: true, headerShown: true }}
+      options={{
+        headerTitle: "Track Detail",
+        headerBackTitleVisible: true,
+        headerTitleAlign: "center",
+      }}
     />
   </Stack.Navigator>
 );
@@ -54,17 +62,29 @@ const MainFlow = () => (
     <Tab.Screen
       name="trackListFlow"
       component={TrackListStack}
-      options={{ headerShown: false }}
+      options={{
+        headerShown: false,
+        title: "Tracks",
+        tabBarIcon: ({}) => <FontAwesome name="th-list" size={20} />,
+      }}
     />
     <Tab.Screen
       name="TrackCreate"
       component={TrackCreateScreen}
-      options={{ headerShown: false }}
+      options={{
+        headerShown: false,
+        title: "Add Track",
+        tabBarIcon: ({}) => <FontAwesome name="plus" size={20} />,
+      }}
     />
     <Tab.Screen
       name="Account"
       component={AccountScreen}
-      options={{ headerShown: false }}
+      options={{
+        headerShown: false,
+        title: "Account",
+        tabBarIcon: ({}) => <FontAwesome name="gear" size={20} />,
+      }}
     />
   </Tab.Navigator>
 );
@@ -83,7 +103,9 @@ const App = () => {
               <Stack.Screen
                 name="ResolveAuth"
                 component={ResolveAuthScreen}
-                options={{ headerShown: false }}
+                options={{
+                  headerShown: false,
+                }}
               />
               <Stack.Screen
                 name="loginFlow"
